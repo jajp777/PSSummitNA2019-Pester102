@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <!-- <meta http-equiv="refresh" content="4"> -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,7 +79,7 @@
           <!-- Try to inline svg to keep from needing extra output files -->
           <svg style="width: 80px; height: 60px;" >
               <use xlink:href="#PowerShell"  />
-          </svg>          
+          </svg>
           Overview <small>{REPO}</small></h1>
 
         <div class="row">
@@ -142,11 +143,6 @@
                   <td>Passed Count</td>
                   <td>{PASSED_COUNT}</td>
                 </tr>
-                <tr>
-                  <td>Failed Count</td>
-                  <td>{FAILED_COUNT}</td>
-                </tr>
-                <tr>
                   <td>Skipped Count</td>
                   <td>{SKIPPED_COUNT}</td>
                 </tr>
@@ -155,20 +151,28 @@
                   <td>{PENDING_COUNT}</td>
                 </tr>
                 <tr>
-                  <td>Number Of Commands Analyzed</td>
-                  <td>{NUMBER_OF_COMMANDS_ANALYZED}</td>
+                  <td>Failed Count</td>
+                  <td>{FAILED_COUNT}</td>
                 </tr>
                 <tr>
-                  <td>Number Of Files Analyzed</td>
-                  <td>{NUMBER_OF_FILES_ANALYZED}</td>
+                  <td>Critical Impact Failures</td>
+                  <td>{CRITICAL_CONTROL_FAILURE_COUNT}</td>
                 </tr>
                 <tr>
-                  <td>Number Of Commands Executed</td>
-                  <td>{NUMBER_OF_COMMANDS_EXECUTED}</td>
+                  <td>High Impact Failures</td>
+                  <td>{HIGH_CONTROL_FAILURE_COUNT}</td>
                 </tr>
                 <tr>
-                  <td>Number Of Commands Missed</td>
-                  <td>{NUMBER_OF_COMMANDS_MISSED}</td>
+                  <td>Medium Impact Failures</td>
+                  <td>{MEDIUM_CONTROL_FAILURE_COUNT}</td>
+                </tr>
+                <tr>
+                  <td>Low Impact Failures</td>
+                  <td>{LOW_CONTROL_FAILURE_COUNT}</td>
+                </tr>
+                <tr>
+                  <td>No Impact Failures</td>
+                  <td>{NONE_CONTROL_FAILURE_COUNT}</td>
                 </tr>
               </table>
             </div>
@@ -177,10 +181,10 @@
           <div class="col-xs-6 col-sm-3 placeholder">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true"></i> Unit Tests</h3>
+                <h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true"></i> Failed Controls</h3>
               </div>
               <div class="panel-body">
-                <canvas id="UnitTests" width="200" height="150"></canvas>
+                <canvas id="FailedControls" width="200" height="150"></canvas>
               </div>
             </div>
           </div>
@@ -210,25 +214,32 @@
         </div>
 
 
-        <div class="row placeholders">
+        <div class="row">
 
-          <div class="col-xs-6 col-sm-8">
+          <div>
             <h2 class="sub-header" id="tests">
-              <i class="fa fa-file-code-o" aria-hidden="true"></i> Pester Tests 
-              <span class="badge">{PASSED_COUNT} passed</span>
+              <i class="fa fa-file-code-o" aria-hidden="true"></i> Failed Controls
+              <!-- <span class="badge">{PASSED_COUNT} passed</span>
               <span class="badge">{FAILED_COUNT} failed</span>
               <span class="badge">{SKIPPED_COUNT} skipped</span>
-              <span class="badge">{PENDING_COUNT} pending</span>
+              <span class="badge">{PENDING_COUNT} pending</span> -->
             </h2>
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Status</th>
+                  <th>Control</th>
+                  <th>Test</th>
+                  <th>Tags</th>
+                  <th>Information</th>
+                  <th>Error Message</th>
+
+                  <!-- <th>Status</th>
                   <th>Test</th>
                   <th>Describe</th>
                   <th>Context</th>
                   <th>Error Message</th>
-                  <th>Duration</th>
+                  <th>Duration</th> -->
+
                 </tr>
               </thead>
               <tbody>
@@ -237,24 +248,24 @@
             </table>
           </div>
 
-          <div class="col-xs-6 col-sm-4">
+          <!-- <div class="col-xs-6 col-sm-4">
             <h2 class="sub-header"><i class="fa fa-file-text-o" aria-hidden="true"></i> Files Tested <span class="badge">{NUMBER_OF_FILES_ANALYZED}</span></h2>
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th class="col-xs-12">File &amp; Test Coverage</th>
-                  <!--<th class="col-xs-6">Coverage</th>-->
+                  <th class="col-xs-6">Coverage</th>
                 </tr>
               </thead>
               <tbody>
                 {FILES_TESTED_TABLE}
               </tbody>
             </table>
-          </div>
+          </div> -->
 
         </div>
 
-        <div class="row placeholders">
+        <!-- <div class="row placeholders">
 
           <div class="col-xs-6 col-sm-12">
             <h2 class="sub-header" id="analysis"><i class="fa fa-eye" aria-hidden="true"></i> Script Analysis
@@ -277,9 +288,9 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row placeholders">
+        <!-- <div class="row placeholders">
 
           <div class="col-xs-6 col-sm-12">
             <h2 class="sub-header" id="coverage">
@@ -303,7 +314,7 @@
             </table>
           </div>
 
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -312,38 +323,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                 
+
     <script src="./lib/TestReport.js"></script>
 
     <script>
 
     // Unit Test Chart
-    var ctx = $("#UnitTests");
+    var ctx = $("#FailedControls");
     var data = {
       labels: [
-        "Pass",
-        "Fail",
-        "Skipped",
-        "Pending"
+        "Critical",
+        "High",
+        "Medium",
+        "Low",
+        "None"
       ],
       datasets: [
         {
-          data: [{PASSED_COUNT}, {FAILED_COUNT},{SKIPPED_COUNT},{PENDING_COUNT}],
+          data: [
+            {CRITICAL_CONTROL_FAILURE_COUNT},
+            {HIGH_CONTROL_FAILURE_COUNT},
+            {MEDIUM_CONTROL_FAILURE_COUNT},
+            {LOW_CONTROL_FAILURE_COUNT},
+            {NONE_CONTROL_FAILURE_COUNT},
+          ],
           backgroundColor: [
-            "#5cb85c",
             "#FF6384",
             "#f0ad4e",
+            "#7F3496",
             "#5bc0de",
+            "#c0c0c0",
           ],
           hoverBackgroundColor: [
-            "#5cb85c",
             "#FF6384",
             "#f0ad4e",
+            "#7F3496",
             "#5bc0de",
+            "#c0c0c0",
           ]
         }]
       };
-      var UnitTests = new Chart(ctx, {
+      var FailedControls = new Chart(ctx, {
         type: 'doughnut',
         data: data,
         options: {
